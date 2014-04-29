@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=GB18030">
+<META name="GENERATOR" content="IBM Software Development Platform">
+<TITLE>temp.html</TITLE>
+<style type="text/css">
+
+/* 下拉框样式 */
+.select01 * {
+	margin: 0;
+	padding: 0;
+	height: 16px;
+}
+.select01 {
+	border:1px solid #c8c8c8;
+	float: left;
+	display: inline;
+}
+.select01 div {
+	border:1px solid #fff;
+	float: left;
+}
+/* 子选择器，在FF等非IE浏览器中识别 */
+.select01>div {
+	height: 17px;
+	overflow:hidden;
+}
+/* 通配选择符，只在IE浏览器中识别 */
+* html .select01 div span select {
+	display:block;
+	float: left;
+	margin: -2px;
+}
+.select01 div span>select {
+	display:block;
+	height:21px;
+	float:none;
+	margin: -2px;
+	padding: 0px;
+}
+.select01 span { border:0; zoom:1;}
+
+</style>
+</head>
+
+<body>
+	<div class="select01">
+		<div>
+			<span>
+			 	<select name="PassQuestionBox" id="PassQuestionBox">
+					<option value="1">节目资料</option>
+					<option value="1">节目资料</option>
+				</select>
+			</span>
+		</div>
+	</div>
+	
+	<div>
+		<select >
+			<option value="1">节目资料</option>
+			<option value="1">节目资料</option>
+		</select>
+	</div>
+</body>
+</html>

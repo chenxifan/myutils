@@ -1,0 +1,7 @@
+javascript库存放路径规则：
+	1、js库根目录存放路径：/ppsWeb/WebContent/js/；
+	2、js第三方库存放路径: /ppsWeb/WebContent/js/第三方库名称，例如：/ppsWeb/WebContent/js/jquery-easyui/；
+	3、工具库（单个文件的js）存放路径：/ppsWeb/WebContent/js/utils/
+	4、ExPPS框架相关的js存放路径：/ppsWeb/WebContent/js/core/
+	4、与业务模块相关的js存放路径：/ppsWeb/WebContent/js/modules/模块名称，例如：节目信息模块用到的js存放路径：/ppsWeb/WebContent/js/modules/program/；
+	
