@@ -13,87 +13,58 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 日期工具类
+ * 职责：日期工具类
+ * 
+ * @author chenxf
+ * @version 1.0
  */
 public class DateUtil {
-	/**
-	 * 字符转化为日期
-	 * 
-	 * @param dateStr
-	 * @return
-	 */
-	public static Date string2Date(String dateStr) {
-		if (!StringUtils.isEmpty(dateStr)) {
-			SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-			SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
-			try {
-				return df.parse(dateStr);
-			} catch (Exception e) {
-
-			}
-			try {
-				return df1.parse(dateStr);
-			} catch (Exception e) {
-
-			}
-			try {
-				return df2.parse(dateStr);
-			} catch (Exception e) {
-
-			}
-		}
-		return null;
-	}
 
 	/**
-	 * 字符转化为日期
+	 * 职责：根据指定的格式，将字符转换化为日期
 	 * 
 	 * @param dateStr
+	 * @param format
 	 * @return
 	 */
-	public static Date string2Date(String dateStr, String format) {
+	public static Date string2Date(String dateStr, String format) throws Exception {
 		Date date = null;
 		DateFormat df = new SimpleDateFormat(format);
-		try {
-			if (dateStr != null && !dateStr.trim().equals("")) {
-				date = df.parse(dateStr);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		if (dateStr != null && !dateStr.trim().equals("")) {
+			date = df.parse(dateStr);
 		}
 		return date;
 	}
 
 	/**
-	 * 日期转化为时间
+	 * 职责：日期转化为字符串，格式为yyyy-MM-dd
 	 * 
 	 * @param date
 	 * @return
 	 */
 	public static String date2String(Date date) {
-		String str = "";
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		if (date != null) {
-			str = df.format(date);
-		}
-		return str;
+		return date2String(date, "yyyy-MM-dd");
 	}
 
 	/**
-	 * 日期转化为时间
+	 * 职责：将日期转化为指定格式的字符串。<br/>
+	 * 注意：如果格式为null，则默认为yyyy-MM-dd
 	 * 
 	 * @param date
-	 * @return
+	 * @param format
+	 * @return 如果时间为null，则返回null。
 	 */
 	public static String date2String(Date date, String format) {
-		String str = "";
-		DateFormat df = new SimpleDateFormat(format);
-		if (date != null) {
-			str = df.format(date);
+		if (format == null) {
+			format = "yyyy-MM-dd";
 		}
-		return str;
+
+		DateFormat df = new SimpleDateFormat(format);
+		if (date == null) {
+			return null;
+		}
+
+		return df.format(date);
 	}
 
 	/**

@@ -1,14 +1,19 @@
-package com.excellence.expps.util;
+package com.cxf.myutils;
 
 import java.lang.reflect.Method;
 
 /**
- * Debug工具
+ * 职责：Debug工具
  * 
- * @author Administrator
+ * @author chenxf
+ * @version 1.0
  */
 public class DebugUtil {
 
+	/**
+	 * 职责：输出指定对象的get方法
+	 * @param obj
+	 */
 	public static void outputObjectGetMothod(Object obj) {
 		try {
 			Method[] methods = obj.getClass().getMethods();
