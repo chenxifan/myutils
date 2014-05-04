@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>使用CSS控制打印样式</title>
+<style type="text/css"  media="print">
+/**
+ * 如果是嵌套的区域，可以设置visibility属性值为hidden。
+ * 与display属性不同，visibility属性为隐藏的对象保留其占据的物理空间，即打印的时候会留有空白。
+ */
+body{visibility:hidden;}
+.myPrintArea{visibility: visible;}
+
+/**
+ * 对不需要隐藏的区域设置display属性值为none。
+ * 与visibility属性的hidden值不同，其不为被隐藏的对象保留其物理空间
+ */
+.DS_Header, 
+.DS_Footer,
+.DS2_MidModuleTitle {display:none}
+</style>
+</head>
+<body>
+
+栏目 &gt; 测试打印
+
+<div class="myPrintArea">
+这里是需要打印的内容
+</div>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
  * Created on 2012-8-28
  *
  */
-package com.excellence.expps.util;
+package com.cxf.myutils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

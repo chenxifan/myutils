@@ -1,4 +1,4 @@
-package com.excellence.expps.util;
+package com.cxf.myutils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -21,12 +21,20 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
 
+/**
+ * 职责：Jar文件工具类 <br/>
+ * 说明：使用Ant的Zip工具类实现更强大的文档打包功能
+ * 
+ * @author chenxf
+ * @version 1.0
+ */
 public class JarFileUtils {
 
 	private static Log log = LogFactory.getLog(JarFileUtils.class);
 
 	/**
 	 * 功能：创建压缩文件
+	 * 
 	 * @param sourcePath
 	 * @param savePath
 	 * @param encoding
@@ -36,7 +44,7 @@ public class JarFileUtils {
 		ZipOutputStream out = null;
 		try {
 			out = new ZipOutputStream(new FileOutputStream(savePath));
-            out.setEncoding(encoding);
+			out.setEncoding(encoding);
 			zipCon(out, sourceFile, "");
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -56,12 +64,12 @@ public class JarFileUtils {
 			throws Exception {
 		if (file.isDirectory()) {
 			String path = base + "/";
-            
-			//避免将根目录也打包进去
-            if (!"/".equals(path)) {
-                out.putNextEntry(new ZipEntry(path));// 创建目录
-            }
-			
+
+			// 避免将根目录也打包进去
+			if (!"/".equals(path)) {
+				out.putNextEntry(new ZipEntry(path));// 创建目录
+			}
+
 			base = base.length() == 0 ? "" : path;
 			File[] fileList = file.listFiles();
 			for (int i = 0; i < fileList.length; i++) {
@@ -85,24 +93,28 @@ public class JarFileUtils {
 			}
 		}
 	}
-	
+
 	/**
 	 * 功能：解压缩JAR包
-	 * @param filePath 文件名
-	 * @param outputPath 解压输出路径
-	 * @throws IOException IO异常
+	 * 
+	 * @param filePath
+	 *            文件名
+	 * @param outputPath
+	 *            解压输出路径
+	 * @throws IOException
+	 *             IO异常
 	 */
 	public static void unzip(String filePath, String outputPath) throws IOException {
-		//追加分隔符
+		// 追加分隔符
 		if (!outputPath.endsWith("\\") && !outputPath.endsWith("/")) {
 			outputPath += File.separator;
 		}
-		
+
 		log.debug(filePath);
 		JarFile jf = new JarFile(filePath);
 
-		for (Enumeration e = jf.entries(); e.hasMoreElements(); ) {
-			JarEntry je = (JarEntry)e.nextElement();
+		for (Enumeration e = jf.entries(); e.hasMoreElements();) {
+			JarEntry je = (JarEntry) e.nextElement();
 			String outFileName = outputPath + je.getName();
 			File f = new File(outFileName);
 			// 创建该路径的目录和所有父目录
@@ -148,6 +160,7 @@ public class JarFileUtils {
 
 	/**
 	 * 功能：循环创建父目录
+	 * 
 	 * @param outFileName
 	 */
 	private static void makeSupDir(String outFileName) {
@@ -166,7 +179,9 @@ public class JarFileUtils {
 
 	/**
 	 * 功能：删除加压目录及目录下的文件
-	 * @param path	存放jar包解压文件的目录
+	 * 
+	 * @param path
+	 *            存放jar包解压文件的目录
 	 */
 	public static void cleanUnzip(String path) throws IOException {
 		File file = new File(path);
@@ -177,10 +192,12 @@ public class JarFileUtils {
 			FileUtils.deleteDirectory(file);
 		}
 	}
-	
+
 	/**
 	 * 功能：获取JAR包内所有的class完整类名
-	 * @param filePath jar文件完整路径地址
+	 * 
+	 * @param filePath
+	 *            jar文件完整路径地址
 	 * @return class完整类名集合
 	 * @throws IOException
 	 */
@@ -188,14 +205,14 @@ public class JarFileUtils {
 		List classNames = new ArrayList();
 		JarFile jf = new JarFile(filePath);
 
-		for (Enumeration e = jf.entries(); e.hasMoreElements(); ) {
-			JarEntry je = (JarEntry)e.nextElement();
+		for (Enumeration e = jf.entries(); e.hasMoreElements();) {
+			JarEntry je = (JarEntry) e.nextElement();
 			if (je.isDirectory()) {
 				continue;
 			}
-			
-			//例子：org/apache/hadoop/examples/WordCount$TokenizerMapper.class
-			//截取以“.class”结束的文件
+
+			// 例子：org/apache/hadoop/examples/WordCount$TokenizerMapper.class
+			// 截取以“.class”结束的文件
 			String name = je.getName();
 			int charIndex = name.lastIndexOf(".");
 			if (charIndex != -1 && ".class".equalsIgnoreCase(name.substring(charIndex))) {
@@ -206,7 +223,7 @@ public class JarFileUtils {
 				classNames.add(name);
 			}
 		}
-		
+
 		return classNames;
 	}
 }

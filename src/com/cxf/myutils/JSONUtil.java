@@ -1,10 +1,7 @@
 /*
  * 创建日期 2012-8-1
- *
- * TODO 要更改此生成的文件的模板，请转至
- * 窗口 － 首选项 － Java － 代码样式 － 代码模板
  */
-package com.excellence.expps.util;
+package com.cxf.myutils;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -21,13 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.excellence.expps.program.vo.ProgramInfoVO;
-import com.excellence.gzq.basecomponent.frame.Page;
-
 /**
- * @author Administrator
- * 
- * TODO 要更改此生成的类型注释的模板，请转至 窗口 － 首选项 － Java － 代码样式 － 代码模板
+ * 职责：JSON工具类
+ * @author chenxf
+ * @version 1.0
  */
 public class JSONUtil {
 

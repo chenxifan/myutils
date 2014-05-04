@@ -7,10 +7,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * 职责：日期工具类
@@ -68,40 +64,13 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取本周上周或者下周的起止日期，周一为某周的开始
+	 * 职责：获取本周上周或者下周的起止日期，周一为某周的开始
 	 * 
-	 * @param i
-	 *            -1 上周，0 本周，1 下周
-	 * @return
+	 * @param returnType
+	 *            返回类型参数：-1 上周，0 本周，1 下周
+	 * @return 返回格式星期一和星期日的日期对象数组
 	 */
-	public static String[] getMSDays(int i) {
-		String[] beginEnd = new String[2];
-		Calendar calendar1 = Calendar.getInstance();
-		Calendar calendar2 = Calendar.getInstance();
-		int dayOfWeek = calendar1.get(Calendar.DAY_OF_WEEK) - 1;
-		int offset1 = 1 - dayOfWeek;
-		int offset2 = 7 - dayOfWeek;
-
-		calendar1.add(Calendar.DATE, offset1 + 7 * i);
-		calendar2.add(Calendar.DATE, offset2 + 7 * i);
-
-		String monday = new SimpleDateFormat("yyyy-MM-dd").format(calendar1
-				.getTime());
-		String sunday = new SimpleDateFormat("yyyy-MM-dd").format(calendar2
-				.getTime());
-		beginEnd[0] = monday;
-		beginEnd[1] = sunday;
-		return beginEnd;
-	}
-
-	/**
-	 * 获取本周上周或者下周的起止日期，周一为某周的开始
-	 * 
-	 * @param i
-	 *            -1 上周，0 本周，1 下周
-	 * @return
-	 */
-	public static Date[] getMSDate(int i) {
+	public static Date[] getMondayAndSundayOfWeek(int returnType) {
 		Date[] beginEnd = new Date[2];
 		Calendar calendar1 = Calendar.getInstance();
 		Calendar calendar2 = Calendar.getInstance();
@@ -109,8 +78,8 @@ public class DateUtil {
 		int offset1 = 1 - dayOfWeek;
 		int offset2 = 7 - dayOfWeek;
 
-		calendar1.add(Calendar.DATE, offset1 + 7 * i);
-		calendar2.add(Calendar.DATE, offset2 + 7 * i);
+		calendar1.add(Calendar.DATE, offset1 + 7 * returnType);
+		calendar2.add(Calendar.DATE, offset2 + 7 * returnType);
 
 		beginEnd[0] = calendar1.getTime();
 		beginEnd[1] = calendar2.getTime();
@@ -118,17 +87,30 @@ public class DateUtil {
 	}
 
 	/**
-	 * 得到指定月份的开始时间和结束时间,
+	 * 职责：获取本周上周或者下周的起止日期，周一为某周的开始
 	 * 
-	 * For Example: Map result = Test.getMonthBeginOrEndDay(0); //系统时间的当前月份 Date
-	 * monthBeginDate = (Date) result.get("monthBeginDate"); Date monthEndDate =
-	 * (Date) result.get("monthEndDate");
+	 * @param returnType
+	 *            返回类型参数：-1 上周，0 本周，1 下周
+	 * @return 返回格式星期一和星期日的日期字符串数组，格式为yyyy-MM-dd
+	 */
+	public static String[] getMondayAndSundayOfWeekStr(int returnType) {
+		Date[] beginEnd = getMondayAndSundayOfWeek(returnType);
+		String[] beginEndStr = new String[2];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		beginEndStr[0] = sdf.format(beginEnd[0].getTime());
+		beginEndStr[1] = sdf.format(beginEnd[1].getTime());
+		return beginEndStr;
+	}
+
+	/**
+	 * 职责：得到指定月份的开始时间和结束时间
 	 * 
 	 * @param monthCount
-	 *            ： 指定的月数，0：代表系统时间的当前月份， 1：代表系统时间的下一个月份,-1代表系统时间的上一个月，以此类推。
+	 *            指定的月数，0：代表系统时间的当前月份， 1：代表系统时间的下一个月份,-1代表系统时间的上一个月，以此类推。
+	 * @return 返回开始时间和结束时间日期对象数组
 	 */
-	public static Map getMonthBeginOrEndDay(int monthCount) {
-		Map result = new HashMap();
+	public static Date[] getMonthBeginAndEndDay(int monthCount) {
+		Date[] beginEnd = new Date[2];
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -137,19 +119,20 @@ public class DateUtil {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-		result.put("monthBeginDate", calendar.getTime());
+		beginEnd[0] = calendar.getTime();
 
 		calendar.add(Calendar.MONTH, 1);
 		calendar.add(Calendar.SECOND, -1);
-		result.put("monthEndDate", calendar.getTime());
-		return result;
+		beginEnd[1] = calendar.getTime();
+
+		return beginEnd;
 	}
 
 	/**
-	 * 获得指定日期的凌晨时间
+	 * 职责：获得指定日期的凌晨时间
 	 * 
 	 * @param srcDate
-	 *            :指定的日期
+	 *            指定的日期
 	 * @return 指定日期的凌晨时间，即某日的0时0分0秒
 	 */
 	public static Date getZeroDate(Date srcDate) {
@@ -165,10 +148,10 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获得指定日期的午夜时间
+	 * 职责：获得指定日期的午夜时间
 	 * 
 	 * @param srcDate
-	 *            :指定的日期
+	 *            指定的日期
 	 * @return 指定日期的凌晨时间，即某日的23时59分59秒
 	 */
 	public static Date getMidnightDate(Date srcDate) {
@@ -184,24 +167,25 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取2个日期间隔的天数，规则：第一个日期 距离 第二个日期 的天数；如果第二个日期为空，则获取第一日期距离当前系统时间的天数
+	 * 职责：获取2个日期间隔的天数。<br/>
+	 * 规则：第一个日期 距离 第二个日期 的天数；如果第二个日期为空，则获取第一日期距离当前系统时间的天数 实现思路：要判断是否在同一个月
 	 * 
 	 * @param firstDate
-	 *            : 第一个日期
+	 *            第一个日期
 	 * @param secondDate
-	 *            ：第二日期， 如果为Null，则用系统时间代替
-	 * @return
+	 *            第二日期，如果为Null，则用系统时间代替
+	 * @return 返回天数
 	 */
-	public static int getSpaceDay(Date firstDate, Date secondDate) {
+	public static int getDaysBetweenTwoDate(Date firstDate, Date secondDate) {
 		if (firstDate == null) {
-			return -999999999;
+			System.err.println("起始日期为null!");
+			return -1;
 		}
 
 		Calendar calendarFirst = Calendar.getInstance();
 		calendarFirst.setTime(firstDate);
 
 		Calendar calendarSecond = Calendar.getInstance();
-
 		if (secondDate == null) {
 			calendarSecond.setTimeInMillis(System.currentTimeMillis());
 		} else {
@@ -211,10 +195,8 @@ public class DateUtil {
 		int totalDayCount = 0;
 
 		// 判断两个日期是否相同的年月
-		if (calendarFirst.get(Calendar.YEAR) == calendarSecond
-				.get(Calendar.YEAR)
-				&& calendarFirst.get(Calendar.MONTH) == calendarSecond
-						.get(Calendar.MONTH)) {
+		if (calendarFirst.get(Calendar.YEAR) == calendarSecond.get(Calendar.YEAR)
+				&& calendarFirst.get(Calendar.MONTH) == calendarSecond.get(Calendar.MONTH)) {
 			totalDayCount += calendarFirst.get(Calendar.DAY_OF_MONTH)
 					- calendarSecond.get(Calendar.DAY_OF_MONTH);
 			return totalDayCount;
@@ -222,7 +204,6 @@ public class DateUtil {
 
 		totalDayCount += calendarFirst.get(Calendar.DAY_OF_MONTH); // 获取当前月份的天数
 		while (true) {
-
 			// 设置第二个日期为当前月份的月初时间（第一天，00时00分00秒）
 			calendarFirst.set(Calendar.DAY_OF_MONTH, 1);
 			calendarFirst.set(Calendar.HOUR_OF_DAY, 0);
@@ -230,47 +211,58 @@ public class DateUtil {
 			calendarFirst.set(Calendar.SECOND, 0);
 
 			// 第一个日期大于第二个日期
-			if (calendarFirst.getTimeInMillis() > calendarSecond
-					.getTimeInMillis()) {
+			if (calendarFirst.getTimeInMillis() > calendarSecond.getTimeInMillis()) {
 				calendarFirst.add(Calendar.SECOND, -1);// 减一秒，得到下一个月末的时间
 
 				// 判断两个日期是否相同的年月
-				if (calendarFirst.get(Calendar.YEAR) == calendarSecond
-						.get(Calendar.YEAR)
-						&& calendarFirst.get(Calendar.MONTH) == calendarSecond
-								.get(Calendar.MONTH)) {
+				if (calendarFirst.get(Calendar.YEAR) == calendarSecond.get(Calendar.YEAR)
+						&& calendarFirst.get(Calendar.MONTH) == calendarSecond.get(Calendar.MONTH)) {
 					totalDayCount += calendarFirst.get(Calendar.DAY_OF_MONTH)
 							- calendarSecond.get(Calendar.DAY_OF_MONTH);
 					return totalDayCount;
 				}
 				totalDayCount += calendarFirst.get(Calendar.DAY_OF_MONTH);
 			} else {
-
 				// 获得上一个月末的日期
 				calendarFirst.add(Calendar.MONTH, 2); // 先加2个月
-				calendarFirst.add(Calendar.SECOND, -1);// 在减一秒
+				calendarFirst.add(Calendar.SECOND, -1);// 再减一秒
 
-				if (calendarFirst.get(Calendar.YEAR) == calendarSecond
-						.get(Calendar.YEAR)
-						&& calendarFirst.get(Calendar.MONTH) == calendarSecond
-								.get(Calendar.MONTH)) {
+				if (calendarFirst.get(Calendar.YEAR) == calendarSecond.get(Calendar.YEAR)
+						&& calendarFirst.get(Calendar.MONTH) == calendarSecond.get(Calendar.MONTH)) {
 					totalDayCount += calendarSecond.get(Calendar.DAY_OF_MONTH);
 					return -totalDayCount;
 				}
 				totalDayCount += calendarFirst.get(Calendar.DAY_OF_MONTH);
 			}
 		}
+	}
 
+	/**
+	 * 职责：得到二个日期间的间隔天数 <br/>
+	 * 实现思路：将两个日期的时间戳相减，除以一天的秒数
+	 * 
+	 * @param date1
+	 *            起始时间，格式"yyyy-MM-dd"
+	 * @param date2
+	 *            结束时间，格式"yyyy-MM-dd"
+	 */
+	public static int getDaysBetweenTwoDate(String date1, String date2) throws Exception {
+		SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date fromDate = myFormatter.parse(date1);
+		java.util.Date toDate = myFormatter.parse(date2);
+		return new Long((fromDate.getTime() - toDate.getTime()) / (24L * 60 * 60 * 1000))
+				.intValue();
 	}
 
 	/**
 	 * 职责：计算工龄，年龄<br/>
 	 * 思路：当前时间与入职时间或出生日期做差
 	 * 
-	 * @param strDate
-	 * @return
+	 * @param joinDateOrBartDate
+	 *            入职时间或出生日期，格式yyyy-MM-dd
+	 * @return 如果参数非法，则返回-1
 	 */
-	private String getYear(String strDate) {
+	public static int getAge(String joinDateOrBartDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		int year = cal.get(Calendar.YEAR);
@@ -278,202 +270,110 @@ public class DateUtil {
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 
 		SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		if (strDate.length() > 0) { // 非空判断
-			try {
-				Date d = bartDateFormat.parse(strDate);
-				cal.setTime(d);
-			} catch (Exception ec) {
-				ec.printStackTrace();
-			}
-
-			int year2 = cal.get(Calendar.YEAR);
-			int month2 = cal.get(Calendar.MONTH);
-			int day2 = cal.get(Calendar.DAY_OF_MONTH);
-
-			int y_c = year - year2;
-			int m_c = month = month2;
-			int d_c = day - day2;
-
-			if (d_c < 0) {
-				m_c -= 1;
-			}
-			if (m_c < 0) {
-				y_c -= 1;
-			}
-
-			return "" + y_c;
-		} else {
-			return "";
+		if (joinDateOrBartDate == null || joinDateOrBartDate.length() <= 0) { // 非空判断
+			return -1;
 		}
-	}
 
-	// 用来全局控制 上一周，本周，下一周的周数变化
-	private int weeks = 0;
-	private int MaxDate;// 一月最大天数
-	private int MaxYear;// 一年最大天数
-
-	public static void main(String[] args) {
-		TimeTest tt = new TimeTest();
-		System.out.println("获取当天日期:" + tt.getNowTime("yyyy-MM-dd"));
-		System.out.println("获取本周一日期:" + tt.getMondayOFWeek());
-		System.out.println("获取本周日的日期~:" + tt.getCurrentWeekday());
-		System.out.println("获取上周一日期:" + tt.getPreviousWeekday());
-		System.out.println("获取上周日日期:" + tt.getPreviousWeekSunday());
-		System.out.println("获取下周一日期:" + tt.getNextMonday());
-		System.out.println("获取下周日日期:" + tt.getNextSunday());
-		System.out.println("获得相应周的周六的日期:" + tt.getNowTime("yyyy-MM-dd"));
-		System.out.println("获取本月第一天日期:" + tt.getFirstDayOfMonth1());
-		System.out.println("获取本月最后一天日期:" + tt.getDefaultDay11());
-		System.out.println("获取上月第一天日期:" + tt.getPreviousMonthFirst());
-		System.out.println("获取上月最后一天的日期:" + tt.getPreviousMonthEnd());
-		System.out.println("获取下月第一天日期:" + tt.getNextMonthFirst());
-		System.out.println("获取下月最后一天日期:" + tt.getNextMonthEnd());
-		System.out.println("获取本年的第一天日期:" + tt.getCurrentYearFirst());
-		System.out.println("获取本年最后一天日期:" + tt.getCurrentYearEnd());
-		System.out.println("获取去年的第一天日期:" + tt.getPreviousYearFirst());
-		System.out.println("获取去年的最后一天日期:" + tt.getPreviousYearEnd());
-		System.out.println("获取明年第一天日期:" + tt.getNextYearFirst());
-		System.out.println("获取明年最后一天日期:" + tt.getNextYearEnd());
-		System.out.println("获取本季度第一天到最后一天:" + tt.getThisSeasonTime(11));
-		System.out.println("获取两个日期之间间隔天数2008-12-1~2008-9.29:"
-				+ TimeTest.getTwoDay("2008-12-1", "2008-9-29"));
-	}
-
-	/**
-	 * 得到二个日期间的间隔天数
-	 */
-	public static String getTwoDay(String sj1, String sj2) {
-		SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
-		long day = 0;
 		try {
-			java.util.Date date = myFormatter.parse(sj1);
-			java.util.Date mydate = myFormatter.parse(sj2);
-			day = (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
-		} catch (Exception e) {
-			return "";
+			Date d = bartDateFormat.parse(joinDateOrBartDate);
+			cal.setTime(d);
+		} catch (Exception ec) {
+			ec.printStackTrace();
+			return -1;
 		}
-		return day + "";
+
+		int year2 = cal.get(Calendar.YEAR);
+		int month2 = cal.get(Calendar.MONTH);
+		int day2 = cal.get(Calendar.DAY_OF_MONTH);
+
+		int y_c = year - year2;
+		int m_c = month - month2;
+		int d_c = day - day2;
+
+		if (d_c < 0) {
+			m_c -= 1;
+		}
+		if (m_c < 0) {
+			y_c -= 1;
+		}
+
+		return y_c;
 	}
 
 	/**
-	 * 根据一个日期，返回是星期几的字符串
+	 * 职责：根据一个日期，返回是星期几的字符串 <br/>
+	 * 实现思路：使用SimpleDateFormat("EEEE")将日期格式化为对应的星期几
 	 * 
 	 * @param sdate
-	 * @return
+	 *            指定日期，格式yyyy-MM-dd
+	 * @return 返回星期一~星期日
 	 */
-	public static String getWeek(String sdate) {
+	public static String getWeek(String sdate) throws Exception {
 		// 再转换为时间
-		Date date = TimeTest.strToDate(sdate);
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		Date date = string2Date(sdate, "yyyy-MM-dd");
+		// Calendar c = Calendar.getInstance();
+		// c.setTime(date);
 		// int hour=c.get(Calendar.DAY_OF_WEEK);
 		// hour中存的就是星期几了，其范围 1~7
 		// 1=星期日 7=星期六，其他类推
-		return new SimpleDateFormat("EEEE").format(c.getTime());
+		return new SimpleDateFormat("EEEE").format(date);
 	}
 
 	/**
-	 * 将短时间格式字符串转换为时间 yyyy-MM-dd
+	 * 职责：计算当月最后一天,返回字符串 <br/>
+	 * 实现思路：根据Calendar的日期运算
 	 * 
-	 * @param strDate
-	 * @return
+	 * @return 返回日期字符串，格式yyyy-MM-dd
 	 */
-	public static Date strToDate(String strDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		ParsePosition pos = new ParsePosition(0);
-		Date strtodate = formatter.parse(strDate, pos);
-		return strtodate;
-	}
-
-	/**
-	 * 两个时间之间的天数
-	 * 
-	 * @param date1
-	 * @param date2
-	 * @return
-	 */
-	public static long getDays(String date1, String date2) {
-		if (date1 == null || date1.equals(""))
-			return 0;
-		if (date2 == null || date2.equals(""))
-			return 0;
-		// 转换为标准时间
-		SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date date = null;
-		java.util.Date mydate = null;
-		try {
-			date = myFormatter.parse(date1);
-			mydate = myFormatter.parse(date2);
-		} catch (Exception e) {
-		}
-		long day = (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
-		return day;
-	}
-
-	// 计算当月最后一天,返回字符串
-	public String getDefaultDay11() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	public static String getLastDayOfThisMonth() {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
 		lastDate.add(Calendar.MONTH, 1);// 加一个月，变为下月的1号
 		lastDate.add(Calendar.DATE, -1);// 减去一天，变为当月最后一天
 
-		str = sdf.format(lastDate.getTime());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 上月第一天
-	public String getPreviousMonthFirst() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：上月第一天
+	 * 
+	 * @return 返回日期字符串，格式yyyy-MM-dd
+	 */
+	public static String getFirstDayOfPreviousMonth() {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
 		lastDate.add(Calendar.MONTH, -1);// 减一个月，变为下月的1号
-		// lastDate.add(Calendar.DATE,-1);//减去一天，变为当月最后一天
 
-		str = sdf.format(lastDate.getTime());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 获取当月第一天
-	public String getFirstDayOfMonth1() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：获取当月第一天
+	 * 
+	 * @return 返回日期字符串，格式yyyy-MM-dd
+	 */
+	public static String getFirstDayOfThisMonth() {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
-		str = sdf.format(lastDate.getTime());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 获得本周星期日的日期
-	public String getCurrentWeekday() {
-		weeks = 0;
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus + 6);
-		Date monday = currentDate.getTime();
-
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	// 获取当天时间
-	public String getNowTime(String dateformat) {
-		Date now = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat(dateformat);// 可以方便地修改日期格式
-		String hehe = dateFormat.format(now);
-		return hehe;
-	}
-
-	// 获得当前日期与本周日相差的天数
-	private int getMondayPlus() {
+	/**
+	 * 职责：获得当前日期与本周日相差的天数 <br/>
+	 * 注意：这个方法按照西方的传统来计算，即星期日是当周的第一天，则返回的数字是<=0 <br/>
+	 * 实现思路：利用Calendar获取今天是星期几
+	 * 
+	 * @return
+	 */
+	public static int getMondayPlus() {
 		Calendar cd = Calendar.getInstance();
-		// 获得今天是一周的第几天，星期日是第一天，星期二是第二天......
 		int dayOfWeek = cd.get(Calendar.DAY_OF_WEEK) - 1; // 因为按中国礼拜一作为第一天所以这里减1
 		if (dayOfWeek == 1) {
 			return 0;
@@ -482,158 +382,87 @@ public class DateUtil {
 		}
 	}
 
-	// 获得本周一的日期
-	public String getMondayOFWeek() {
-		weeks = 0;
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus);
-		Date monday = currentDate.getTime();
-
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	// 获得相应周的周六的日期
-	public String getSaturday() {
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus + 7 * weeks + 6);
-		Date monday = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	// 获得上周星期日的日期
-	public String getPreviousWeekSunday() {
-		weeks = 0;
-		weeks--;
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus + weeks);
-		Date monday = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	// 获得上周星期一的日期
-	public String getPreviousWeekday() {
-		weeks--;
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus + 7 * weeks);
-		Date monday = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	// 获得下周星期一的日期
-	public String getNextMonday() {
-		weeks++;
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus + 7);
-		Date monday = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	// 获得下周星期日的日期
-	public String getNextSunday() {
-
-		int mondayPlus = this.getMondayPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, mondayPlus + 7 + 6);
-		Date monday = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preMonday = df.format(monday);
-		return preMonday;
-	}
-
-	private int getMonthPlus() {
-		Calendar cd = Calendar.getInstance();
-		int monthOfNumber = cd.get(Calendar.DAY_OF_MONTH);
-		cd.set(Calendar.DATE, 1);// 把日期设置为当月第一天
-		cd.roll(Calendar.DATE, -1);// 日期回滚一天，也就是最后一天
-		MaxDate = cd.get(Calendar.DATE);
-		if (monthOfNumber == 1) {
-			return -MaxDate;
-		} else {
-			return 1 - monthOfNumber;
-		}
-	}
-
-	// 获得上月最后一天的日期
-	public String getPreviousMonthEnd() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：获得上月最后一天的日期
+	 * @return
+	 */
+	public static String getLastDayOfPreviousMonth() {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.add(Calendar.MONTH, -1);// 减一个月
 		lastDate.set(Calendar.DATE, 1);// 把日期设置为当月第一天
 		lastDate.roll(Calendar.DATE, -1);// 日期回滚一天，也就是本月最后一天
-		str = sdf.format(lastDate.getTime());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 获得下个月第一天的日期
-	public String getNextMonthFirst() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：获得下个月第一天的日期
+	 * @return
+	 */
+	public static String getNextMonthFirst() {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.add(Calendar.MONTH, 1);// 减一个月
 		lastDate.set(Calendar.DATE, 1);// 把日期设置为当月第一天
-		str = sdf.format(lastDate.getTime());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 获得下个月最后一天的日期
-	public String getNextMonthEnd() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：获得下个月最后一天的日期
+	 * @return
+	 */
+	public static String getLastDayOfNextMonth() {
 		Calendar lastDate = Calendar.getInstance();
-		lastDate.add(Calendar.MONTH, 1);// 加一个月
+		lastDate.add(Calendar.MONTH, 2);// 加2个月
 		lastDate.set(Calendar.DATE, 1);// 把日期设置为当月第一天
 		lastDate.roll(Calendar.DATE, -1);// 日期回滚一天，也就是本月最后一天
-		str = sdf.format(lastDate.getTime());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 获得明年最后一天的日期
-	public String getNextYearEnd() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：获得明年最后一天的日期 <br/>
+	 * 实现思路：跟月份操作类似
+	 * @return
+	 */
+	public static String getLastDayOfNextYear() {
 		Calendar lastDate = Calendar.getInstance();
-		lastDate.add(Calendar.YEAR, 1);// 加一个年
+		lastDate.add(Calendar.YEAR, 2);// 加2年
 		lastDate.set(Calendar.DAY_OF_YEAR, 1);
 		lastDate.roll(Calendar.DAY_OF_YEAR, -1);
-		str = sdf.format(lastDate.getTime());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 	}
 
-	// 获得明年第一天的日期
-	public String getNextYearFirst() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	/**
+	 * 职责：获得明年第一天的日期
+	 * @return
+	 */
+	public static String getNextYearFirst() {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.add(Calendar.YEAR, 1);// 加一个年
 		lastDate.set(Calendar.DAY_OF_YEAR, 1);
-		str = sdf.format(lastDate.getTime());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String str = sdf.format(lastDate.getTime());
 		return str;
 
 	}
 
-	// 获得本年有多少天
-	private int getMaxYear() {
+	/**
+	 * 职责：获得本年有多少天
+	 * 实现思路：把日期设到当年最后一天，然后获取当天是当年的第几天
+	 * @return
+	 */
+	public static int getMaxYear() {
 		Calendar cd = Calendar.getInstance();
 		cd.set(Calendar.DAY_OF_YEAR, 1);// 把日期设为当年第一天
 		cd.roll(Calendar.DAY_OF_YEAR, -1);// 把日期回滚一天。
@@ -641,64 +470,12 @@ public class DateUtil {
 		return MaxYear;
 	}
 
-	private int getYearPlus() {
-		Calendar cd = Calendar.getInstance();
-		int yearOfNumber = cd.get(Calendar.DAY_OF_YEAR);// 获得当天是一年中的第几天
-		cd.set(Calendar.DAY_OF_YEAR, 1);// 把日期设为当年第一天
-		cd.roll(Calendar.DAY_OF_YEAR, -1);// 把日期回滚一天。
-		int MaxYear = cd.get(Calendar.DAY_OF_YEAR);
-		if (yearOfNumber == 1) {
-			return -MaxYear;
-		} else {
-			return 1 - yearOfNumber;
-		}
-	}
-
-	// 获得本年第一天的日期
-	public String getCurrentYearFirst() {
-		int yearPlus = this.getYearPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, yearPlus);
-		Date yearDay = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preYearDay = df.format(yearDay);
-		return preYearDay;
-	}
-
-	// 获得本年最后一天的日期 *
-	public String getCurrentYearEnd() {
-		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");// 可以方便地修改日期格式
-		String years = dateFormat.format(date);
-		return years + "-12-31";
-	}
-
-	// 获得上年第一天的日期 *
-	public String getPreviousYearFirst() {
-		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");// 可以方便地修改日期格式
-		String years = dateFormat.format(date);
-		int years_value = Integer.parseInt(years);
-		years_value--;
-		return years_value + "-1-1";
-	}
-
-	// 获得上年最后一天的日期
-	public String getPreviousYearEnd() {
-		weeks--;
-		int yearPlus = this.getYearPlus();
-		GregorianCalendar currentDate = new GregorianCalendar();
-		currentDate.add(GregorianCalendar.DATE, yearPlus + MaxYear * weeks
-				+ (MaxYear - 1));
-		Date yearDay = currentDate.getTime();
-		DateFormat df = DateFormat.getDateInstance();
-		String preYearDay = df.format(yearDay);
-		getThisSeasonTime(11);
-		return preYearDay;
-	}
-
-	// 获得本季度
-	public String getThisSeasonTime(int month) {
+	/**
+	 * 职责：根据指定的月份，获得该月所在的季度日期范围
+	 * @param month 指定月份
+	 * @return 季度的起始日期，起始日:结束日
+	 */
+	public static String getThisSeasonTime(int month) {
 		int array[][] = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 } };
 		int season = 1;
 		if (month >= 1 && month <= 3) {
@@ -722,7 +499,7 @@ public class DateUtil {
 		int years_value = Integer.parseInt(years);
 
 		int start_days = 1;// years+"-"+String.valueOf(start_month)+"-1";//getLastDayOfMonth(years_value,start_month);
-		int end_days = getLastDayOfMonth(years_value, end_month);
+		int end_days = getLastDayOfThisMonth(years_value, end_month);
 		String seasonDate = years_value + "-" + start_month + "-" + start_days
 				+ ";" + years_value + "-" + end_month + "-" + end_days;
 		return seasonDate;
@@ -730,7 +507,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取某年某月的最后一天
+	 * 职责：获取某年某月的最后一天
 	 * 
 	 * @param year
 	 *            年
@@ -738,7 +515,7 @@ public class DateUtil {
 	 *            月
 	 * @return 最后一天
 	 */
-	private int getLastDayOfMonth(int year, int month) {
+	public static int getLastDayOfThisMonth(int year, int month) {
 		if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8
 				|| month == 10 || month == 12) {
 			return 31;
@@ -757,75 +534,23 @@ public class DateUtil {
 	}
 
 	/**
-	 * 是否闰年
+	 * 职责：是否闰年
 	 * 
 	 * @param year
 	 *            年
 	 * @return
 	 */
-	public boolean isLeapYear(int year) {
+	public static boolean isLeapYear(int year) {
 		return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 	}
 
-	// 获取当月第一天
-	public String getFirstDayOfMonth() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		Calendar lastDate = Calendar.getInstance();
-		lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
-		str = sdf.format(lastDate.getTime());
-		return str;
-	}
-
-	// 计算当月最后一天,返回字符串
-	public String getDefaultDay() {
-		String str = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		Calendar lastDate = Calendar.getInstance();
-		lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
-		lastDate.add(Calendar.MONTH, 1);// 加一个月，变为下月的1号
-		lastDate.add(Calendar.DATE, -1);// 减去一天，变为当月最后一天
-
-		str = sdf.format(lastDate.getTime());
-		return str;
-	}
-
-	// 计算当月最后一天,返回字符串
-	public void getDefaultDay22() {
-		// 获取Calendar
-		Calendar calendar = Calendar.getInstance();
-		// 设置时间,当前时间不用设置
-		// calendar.setTime(new Date());
-		// 设置日期为本月最大日期
-		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
-
-		// 打印
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		System.out.println(format.format(calendar.getTime()));
-	}
-
-	// 计算昨天
+	/**
+	 * 职责：计算昨天
+	 * @return
+	 */
 	public Date getYesterday() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -1);
-		return cal.getTime();
-	}
-
-	// 计算昨天
-	public String getYesterday33() {
-		Date d = new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24);
-		SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-		String ZUOTIAN = sp.format(d);// 获取昨天日期
-		return ZUOTIAN;
-	}
-
-	// 计算今天
-	public Date getToday() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
-				cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		return cal.getTime();
 	}
 

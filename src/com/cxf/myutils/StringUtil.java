@@ -1,4 +1,7 @@
-package com.excellence.expps.util;
+/*
+ * Create on 2014-5-4
+ */
+package com.cxf.myutils;
 
 import java.text.DecimalFormat;
 
@@ -6,7 +9,8 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * 职责：字符串工具类
- * @author Administrator
+ * @author chenxf
+ * @version 1.0
  */
 public class StringUtil {
 	

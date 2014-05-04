@@ -1,13 +1,13 @@
 /*
- * ´´½¨ÈÕÆÚ£º2014-4-23
+ * Create on 2014-5-4
  */
 package com.cxf.myutils;
 
 /**
- * Ö°Ôğ£ºÌá¹©MD5³£ÓÃ²Ù×÷
+ * èŒè´£ï¼šMD5å·¥å…·ç±»
  * 
  * @author chenxf
- * 
+ * @version 1.0
  */
 public class MD5Utils {
 	public static void main(String[] args) {

@@ -2,7 +2,7 @@
  * 创建日期 2012-8-25
  *
  */
-package com.excellence.expps.util;
+package com.cxf.myutils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
