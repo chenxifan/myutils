@@ -78,6 +78,7 @@ public class JSONUtil {
 	 * @param page
 	 * @throws JSONException
 	 */
+	/*
 	public static void setJsonAsRequestAttr(HttpServletRequest request,String attrName,Page page, Collection excludeFields) throws JSONException{
 		
 		if(page == null){
@@ -90,7 +91,7 @@ public class JSONUtil {
 	
 	public static void setJsonAsRequestAttr(HttpServletRequest request,String attrName,Page page) throws JSONException{
 		setJsonAsRequestAttr(request,attrName,page,null);
-	}
+	}*/
 	
 	/**
 	 * 将 list 数据以json格式，发送到页面，配合easy ui 的datagrid组件使用
@@ -123,11 +124,13 @@ public class JSONUtil {
 		Collection list = null;
 		int totleCount = 0;
         JSONObject jresult = new JSONObject();
+        
+        /*
 		if( dataCol instanceof Page){
 			Page page = (Page)dataCol;
 			list = page.getList();
 			totleCount = page.getTotalNumber();
-		}else if(dataCol instanceof List){
+		}else */if(dataCol instanceof List){
 			list = (List)dataCol;
 			totleCount = list.size();
 		}
@@ -215,26 +218,6 @@ public class JSONUtil {
             }  
        }  
        return sb.toString();       
-    }    
-	
-	
-	//测试
-	public static void main(String[] args) throws JSONException {
-		ProgramInfoVO vo = new ProgramInfoVO();
-		
-		vo.setId(new Integer(1));
-		vo.setProgramName("张山");
-		vo.setBuyerName("李斯");
-		
-		JSONObject jobj = JSONUtil.toJSONObject(vo);
-		
-		System.out.println("resutl: " + jobj.toString());
-		Map map = new HashMap();
-		map.put("programName","节目名称");
-		map.put("programType","");
-		map.put("buyer",null);//如果传入空对象 jsonobject 则转化为 {}
-		JSONObject obj = map2EasyuiDatagridData(map);
-		System.out.println("obj = " + obj.toString());
-	}
+    }
 
 }

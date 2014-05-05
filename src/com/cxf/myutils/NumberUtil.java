@@ -1,10 +1,14 @@
-package com.excellence.expps.util;
+/*
+ * Create on 2014-5-5
+ */
+package com.cxf.myutils;
 
 import java.text.DecimalFormat;
 
 /**
- * 数字处理类，例如金额的格式化等功能
- * @author zhangcj
+ * 职责：数字处理类，例如金额的格式化等功能
+ * @author chenxf
+ * @version 1.0
  */
 public class NumberUtil {
 	

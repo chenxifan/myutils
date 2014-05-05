@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>JS封装类实现年月日三级联动下拉列表</title>
+<script language="javascript" src="YMDClass.js"></script>
+<title>无标题文档</title>
+
+<!--   年月日联动下拉选择JS封装类 Ver 1.0 版
+  制作时间:2013-3-12
+　更新时间:2013-3-12
+  应用说明:页面包含<script type="text/javascript" src="YMDClass.js" charset="utf-8"></script>
+  <select name="year1"></select>
+  <select name="month1"></select>
+  <select name="day1"></select>
+  <script>
+  new YMDselect('year1','month1','day1',1990,2,10);
+  </script>
+	年月联动
+	  new YMDselect('year1','month1');
+	  new YMDselect('year1','month1',1990);
+	  new YMDselect('year1','month1',1990,2);
+	年月日联动
+	  new YMDselect('year1','month1','day1');
+	  new YMDselect('year1','month1','day1',1990);
+	  new YMDselect('year1','month1','day1',1990,2);
+	  new YMDselect('year1','month1','day1',1990,2,10);
+\*** 程序制作/版权所有:Kevin QQ:251378427 E-Mail:yeminch@qq.com 网址:http://iulog.com ***/ -->
+</head>
+<body>
+<select name="year1"></select>
+<select name="month1"></select>
+<select name="day1"></select>
+<script>
+	//new YMDselect('year1','month1');
+	//new YMDselect('year1','month1',1990);
+	//new YMDselect('year1','month1',1990,2);
+	//new YMDselect('year1','month1','day1');
+	new YMDselect('year1','month1','day1');
+	//new YMDselect('year1','month1','day1',1990,2);
+	//new YMDselect('year1','month1','day1',1990,2,10);
+</script>
+</body>
+</html>

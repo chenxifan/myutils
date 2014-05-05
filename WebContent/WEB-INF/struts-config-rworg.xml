@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+	<data-sources>
+	</data-sources>
+
+	<form-beans>
+		<form-bean name="poInfoSearchForm" type="com.excellence.rworg.form.PoInfoSearchForm" >
+		</form-bean>
+		<form-bean name="poInfoViewForm" type="com.excellence.rworg.form.PoInfoViewForm" >
+		</form-bean>
+		<form-bean name="poInfoExportForm" type="com.excellence.rworg.form.PoInfoExportForm" >
+		</form-bean>
+		<form-bean name="searcherForm" type="com.excellence.rworg.form.SearcherForm" >
+		</form-bean>
+		 <form-bean name="evaluateForm" type="com.excellence.rworg.form.EvaluateForm" >
+		</form-bean>
+        <form-bean name="relatedPoForm" type="com.excellence.rworg.form.RelatedPoForm" >
+		</form-bean>
+        <form-bean name="feedbackForm" type="com.excellence.rworg.form.FeedbackForm" >
+		</form-bean>
+        <form-bean name="trainLogForm" type="com.excellence.rworg.form.TrainLogForm" >
+		</form-bean>
+        <form-bean name="summaryForm" type="com.excellence.rworg.form.SummaryForm" >
+		</form-bean>
+        <form-bean name="fileForm" type="com.excellence.rworg.form.FileForm" >
+		</form-bean>
+		<form-bean name="personBaseInfoForm" type="com.excellence.rworg.form.PersonBaseInfoForm" >
+		</form-bean>
+		<form-bean name="orgBaseInfoForm" type="com.excellence.rworg.form.OrgBaseInfoForm" >
+		</form-bean>
+		<form-bean name="orgTypeForm" type="com.excellence.rworg.form.OrgTypeForm" >
+		</form-bean>
+		<form-bean name="todoForm" type="com.excellence.rworg.form.TodoForm">
+		</form-bean>
+		<form-bean name="attentionForm" type="com.excellence.rworg.form.AttentionForm">
+		</form-bean>
+		<form-bean name="meetWithForm" type="com.excellence.rworg.form.MeetWithForm">
+		</form-bean>
+		<form-bean name="exportTemplateForm" type="com.excellence.rworg.form.ExportTemplateForm">
+		</form-bean>
+		<form-bean name="controlFieldForm" type="com.excellence.rworg.form.ControlFieldForm">
+		</form-bean>
+		<form-bean name="rightApplyForm" type="com.excellence.rworg.form.RightApplyForm" >
+		</form-bean>
+		<form-bean name="lastViewLogForm" type="com.excellence.rworg.form.LastViewLogForm" >
+		</form-bean>
+	</form-beans>
+
+	<global-forwards>
+		<forward name="messagepage" path="/pubpage/messagepage.jsp"/>
+		<forward name="exceptionpage" path="/pubpage/exceptionpage.jsp"/>
+	</global-forwards>
+
+	<action-mappings>
+		<action name="poInfoSearchForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/poInfoSearch"
+				type="com.excellence.rworg.action.PoInfoSearchAction"
+                >
+			<forward name="orgList" path="/rworg/poInfoSearch/orgList.jsp"/>
+            <forward name="personList" path="/rworg/poInfoSearch/personList.jsp"/>
+            <forward name="orgSelectList" path="/rworg/poInfoSearch/orgSelectList.jsp"/>
+            <forward name="personSelectList" path="/rworg/poInfoSearch/personSelectList.jsp"/>
+            <forward name="searchConditionList" path="/rworg/poInfoSearch/searchConditionList.jsp"/>
+         </action>
+         <action name="poInfoViewForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/poInfoView"
+				type="com.excellence.rworg.action.PoInfoViewAction" >
+			<forward name="orgView" path="/rworg/poInfoView/orgView.jsp"/>
+            <forward name="personView" path="/rworg/poInfoView/personView.jsp"/>
+            <forward name="compare" path="/rworg/poInfoView/compare.jsp"/>
+         </action>
+         <action name="poInfoExportForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/poInfoExport"
+				type="com.excellence.rworg.action.PoInfoExportAction"
+                >
+            <forward name="export" path="/rworg/poInfoExport/export.jsp"/>
+            <forward name="docJs" path="/rworg/poInfoExport/docJs.jsp"/>
+         </action>
+         <action name="searcherForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/searcher"
+				type="com.excellence.rworg.action.SearcherAction"
+                >
+            <forward name="list" path="/rworg/searcher/list.jsp"/>
+            <forward name="edit" path="/rworg/searcher/edit.jsp"/>
+            <forward name="addSearcher" path="/rworg/searcher/addSearcher.jsp"/>
+         </action>
+         <action name="evaluateForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/evaluate"
+				type="com.excellence.rworg.action.EvaluateAction"
+                >
+			<forward name="edit" path="/rworg/evaluate/edit.jsp"/>
+            <forward name="list" path="/rworg/evaluate/list.jsp"/>
+            <forward name="view" path="/rworg/evaluate/view.jsp"/>
+         </action>
+         <action name="relatedPoForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/relatedPo"
+				type="com.excellence.rworg.action.RelatedPoAction"
+                >
+			<forward name="edit" path="/rworg/relatedPo/edit.jsp"/>
+            <forward name="list" path="/rworg/relatedPo/list.jsp"/>
+            <forward name="view" path="/rworg/relatedPo/view.jsp"/>
+         </action>
+         <action name="feedbackForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/feedback"
+				type="com.excellence.rworg.action.FeedbackAction"
+                >
+			<forward name="edit" path="/rworg/feedback/edit.jsp"/>
+            <forward name="list" path="/rworg/feedback/list.jsp"/>
+            <forward name="view" path="/rworg/feedback/view.jsp"/>
+            <forward name="userFeedbacklist" path="/rworg/feedback/userFeedbacklist.jsp"/>
+         </action>
+         <action name="trainLogForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/trainLog"
+				type="com.excellence.rworg.action.TrainLogAction"
+                >
+			<forward name="edit" path="/rworg/trainLog/edit.jsp"/>
+            <forward name="list" path="/rworg/trainLog/list.jsp"/>
+            <forward name="view" path="/rworg/trainLog/view.jsp"/>
+         </action>
+         <action name="summaryForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/summary"
+				type="com.excellence.rworg.action.SummaryAction"
+                >
+			<forward name="edit" path="/rworg/summary/edit.jsp"/>
+            <forward name="list" path="/rworg/summary/list.jsp"/>
+            <forward name="view" path="/rworg/summary/view.jsp"/>
+            <forward name="addSummary" path="/rworg/summary/addSummary.jsp"/>
+         </action>
+         <action name="fileForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/file"
+				type="com.excellence.rworg.action.FileAction"
+                >
+            <forward name="list" path="/rworg/file/list.jsp"/>
+            <forward name="uploadPhoto" path="/rworg/file/uploadPhoto.jsp" />
+			<forward name="uploadPhoto-saved" path="/rworg/file/uploadPhoto-saved.jsp" />
+			<forward name="editFile" path="/rworg/file/editFile.jsp" />
+			<forward name="editListFile" path="/rworg/file/editListFile.jsp" />
+			
+         </action>
+		 <action name="personBaseInfoForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/personBaseInfo"
+				type="com.excellence.rworg.action.PersonBaseInfoAction"
+				className="com.excellence.gzq.basecomponent.frame.BaseActionMapping">
+			<set-property property="method2FunsStr" value="importExcel:rworg_rw_import;addPersonBaseInfo:rworg_rw_new;delete:rworg_rw_delete"/>
+			<set-property property="method2BtnFunsStr" value="list:rworg_rw_import,rworg_rw_new,rworg_rw_delete"/>
+			<set-property property="sysName" value="explatform"/>
+			<forward name="edit" path="/rworg/personBaseInfo/edit.jsp"/>
+            <forward name="list" path="/rworg/personBaseInfo/list.jsp"/>
+            <forward name="importExcel" path="/rworg/personBaseInfo/importExcel.jsp"/>
+			<forward name="deadLog" path="/rworg/personBaseInfo/deadLog.jsp"/>
+         </action>
+		 <action name="personBaseInfoForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/personBaseInfo/add"
+				type="com.excellence.rworg.action.PersonBaseInfoAction"
+				className="com.excellence.gzq.basecomponent.frame.BaseActionMapping">
+			<set-property property="method2FunsStr" value="importExcel:rworg_rw_import;addPersonBaseInfo:rworg_rw_new;delete:rworg_rw_delete"/>
+			<set-property property="method2BtnFunsStr" value="list:rworg_rw_import,rworg_rw_new,rworg_rw_delete"/>
+			<set-property property="sysName" value="explatform"/>
+			<forward name="edit" path="/rworg/personBaseInfo/edit.jsp"/>
+         </action>
+         <action name="orgBaseInfoForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/orgBaseInfo"
+				type="com.excellence.rworg.action.OrgBaseInfoAction"
+                className="com.excellence.gzq.basecomponent.frame.BaseActionMapping">
+
+			<set-property property="method2FunsStr" value="addOrgBaseInfo:rworg_org_new;importExcel:rworg_org_import;delete:rworg_org_delete"/><!--配置是否可以访问新建 导入 删除机构信息的方法-->
+			<set-property property="method2BtnFunsStr" value="list:rworg_org_new,rworg_org_import,rworg_org_delete"/><!--配置是否显示新建 导入 删除  机构信息的按钮-->
+			<set-property property="sysName" value="explatform"/>
+			<forward name="edit" path="/rworg/orgBaseInfo/edit.jsp"/>
+            <forward name="list" path="/rworg/orgBaseInfo/list.jsp"/>
+            <forward name="importExcel" path="/rworg/orgBaseInfo/importExcel.jsp"/>
+			<forward name="changeMaster" path="/rworg/orgBaseInfo/changeMaster.jsp"/>
+			<forward name="orgTypeList" path="/rworg/orgBaseInfo/orgTypeList.jsp"/>
+			<forward name="changeOrgType" path="/rworg/orgBaseInfo/changeOrgType.jsp"/>
+         </action>
+		 <action name="todoForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/todo"
+				type="com.excellence.rworg.action.TodoAction"
+                >
+            <forward name="edit" path="/rworg/todo/edit.jsp"/>
+            <forward name="list" path="/rworg/todo/list.jsp"/>
+            <forward name="view" path="/rworg/todo/view.jsp"/>
+         </action>
+         <action name="orgTypeForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/orgType"
+				type="com.excellence.rworg.action.OrgTypeAction"
+                >
+			<forward name="edit" path="/rworg/orgType/edit.jsp"/>
+            <forward name="list" path="/rworg/orgType/list.jsp"/>
+            <forward name="view" path="/rworg/orgType/view.jsp"/>
+         </action>
+		 <action name="attentionForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/attention"
+				type="com.excellence.rworg.action.AttentionAction"
+                >
+            <forward name="edit" path="/rworg/attention/edit.jsp"/>
+            <forward name="list" path="/rworg/attention/list.jsp"/>
+            <forward name="attentionRwlist" path="/rworg/attention/attentionRwlist.jsp"/>
+            <forward name="attentionOrglist" path="/rworg/attention/attentionOrglist.jsp"/>
+            <forward name="view" path="/rworg/attention/view.jsp"/>
+            <forward name="remove" path="/rworg/attention/remove.jsp"/>
+            <forward name="editGroup" path="/rworg/attention/editGroup.jsp"/>
+            <forward name="groupList" path="/rworg/attention/groupList.jsp"/>
+            <forward name="viewGroup" path="/rworg/attention/viewGroup.jsp"/>
+         </action>
+		 <action name="meetWithForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/meetWith"
+				type="com.excellence.rworg.action.MeetWithAction">
+            <forward name="edit" path="/rworg/meetWith/edit.jsp"/>
+            <forward name="list" path="/rworg/meetWith/list.jsp"/>
+            <forward name="view" path="/rworg/meetWith/view.jsp"/>
+            <forward name="personList" path="/rworg/meetWith/personlist.jsp"/>
+         </action>
+		 <action name="exportTemplateForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/exportTemplate"
+				type="com.excellence.rworg.action.ExportTemplateAction"
+                >
+            <forward name="edit" path="/rworg/exportTemplate/edit.jsp"/>
+            <forward name="list" path="/rworg/exportTemplate/list.jsp"/>
+            <forward name="view" path="/rworg/exportTemplate/view.jsp"/>
+         </action>
+		 <action path="/rworg/controlField" type="com.excellence.rworg.action.ControlFieldAction" parameter="method" name="controlFieldForm" scope="request">
+			<forward name="controlFieldList" path="/rworg/controlField/controlFieldList.jsp">
+			</forward>
+			<forward name="controlFieldEdit" path="/rworg/controlField/controlFieldEdit.jsp">
+			</forward>
+		</action>
+		<action path="/rworg/controlFieldSetting" type="com.excellence.rworg.action.ControlFieldSettingAction" parameter="method">
+			<forward name="fieldSettingView" path="/rworg/permisson/fieldSettingView.jsp">
+			</forward>
+		</action>
+		<action path="/rworg/permisson" type="com.excellence.rworg.action.PermissonAction" parameter="method">
+			<forward name="permsMngView" path="/rworg/permisson/permsMngView.jsp">
+			</forward>
+			<forward name="authorizeView" path="/rworg/permisson/authorizeView.jsp">
+			</forward>
+			<forward name="applyPermView" path="/rworg/permisson/applyPermView.jsp">
+			</forward>
+			<forward name="changeMaster" path="/rworg/permisson/changeMaster.jsp"/>
+			<forward name="authorizeViewByField" path="/rworg/permisson/authorizeViewByField.jsp"/>
+		</action>
+		<action name="rightApplyForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/rightApply"
+				type="com.excellence.rworg.action.RightApplyAction"
+                >
+			<forward name="edit" path="/rworg/rightApply/edit.jsp"/>
+            <forward name="list" path="/rworg/rightApply/list.jsp"/>
+            <forward name="view" path="/rworg/rightApply/view.jsp"/>
+         </action>
+         <action name="lastViewLogForm" 
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/lastViewLog"
+				type="com.excellence.rworg.action.LastViewLogAction"
+                >
+			<forward name="edit" path="/rworg/lastViewLog/edit.jsp"/>
+            <forward name="list" path="/rworg/lastViewLog/list.jsp"/>
+            <forward name="view" path="/rworg/lastViewLog/view.jsp"/>
+         </action>
+        <action
+                parameter="method" scope="request" validate="false" 
+				path="/rworg/portal"
+				type="com.excellence.rworg.action.PortalAction"
+                >
+            <forward name="rworgDesktop" path="/rworg/portal/rworgDesktop.jsp"/>
+         </action>
+	</action-mappings>
+
+	<plug-in className="com.excellence.gzq.basecomponent.util.ConvertPlugIn" />
+	<plug-in className="com.excellence.rworg.RworgStartupPlugin" />
+
+</struts-config>

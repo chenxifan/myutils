@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="logger.js"></script>
+<script type="text/javascript">
+
+window.onload = function() {
+	//开启日志对象和设置调试级别
+	jsLogger.isDebug = true;
+	jsLogger.debugLevel = jsLoggerLevel.error;
+	
+	//调用例子
+	var obj = {a:1, b:2, c:3};
+	jsLogger.info(obj);
+	jsLogger.error(123);
+}
+
+</script>
+</head>
+<body>
+<div id="div">123</div>
+</body>
+</html>
